@@ -1,0 +1,3 @@
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+export function NotFoundPage(){return <main className="flex min-h-dvh items-center justify-center px-6 text-center"><div><img src="/mascot/gloopy-sleeping.png" alt="Mascote Gloopy dormindo" className="mx-auto max-h-64"/><p className="mt-5 text-sm font-bold uppercase tracking-widest text-gloopy-accent">Erro 404</p><h1 className="mt-2 font-display text-4xl font-bold">O Gloopy cochilou nesta página.</h1><p className="mt-3 text-gloopy-muted">Esse caminho não existe ou foi movido.</p><Link to="/" className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-xl bg-gloopy-accent px-6 font-bold text-gloopy-bg-dark"><ArrowLeft/>Voltar ao início</Link></div></main>}

@@ -1,0 +1,16 @@
+import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import { cn } from '../../shared/ui/cn';
+import { SplashScreen } from './SplashScreen';
+
+const links = [['/recursos', 'Recursos'], ['/seguranca', 'Segurança'], ['/games/tic-tac-toe', 'Mini-games'], ['/sobre', 'Sobre']] as const;
+
+export function MarketingLayout() {
+  const [open, setOpen] = useState(false);
+  return <div className="min-h-dvh overflow-x-hidden bg-gloopy-bg-dark"><SplashScreen />
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5"><nav className="mx-auto flex max-w-7xl items-center rounded-2xl border border-white/10 bg-gloopy-bg-dark/80 px-3 py-3 shadow-card backdrop-blur-xl sm:px-5" aria-label="Principal"><Link to="/" className="flex items-center gap-2 font-display text-xl font-bold"><img src="/mascot/gloopy-cool-icon.png" alt="" className="h-10 w-10 rounded-xl" />Gloopy</Link><div className="mx-auto hidden items-center gap-7 lg:flex">{links.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => cn('text-sm font-semibold text-gloopy-muted transition hover:text-white', isActive && 'text-gloopy-accent')}>{label}</NavLink>)}</div><div className="ml-auto hidden items-center gap-2 sm:flex"><Link to="/login" className="rounded-xl px-4 py-3 text-sm font-bold hover:bg-white/10">Entrar</Link><Link to="/register" className="rounded-xl bg-gloopy-accent px-5 py-3 text-sm font-bold text-gloopy-bg-dark transition hover:-translate-y-0.5">Criar conta</Link></div><button onClick={() => setOpen((value) => !value)} className="ml-auto grid h-11 w-11 place-items-center rounded-xl border sm:hidden" aria-label="Abrir menu" aria-expanded={open}>{open ? <X /> : <Menu />}</button></nav>{open ? <div className="mx-auto mt-2 max-w-7xl rounded-2xl border bg-gloopy-surface p-3 shadow-card sm:hidden">{links.map(([to, label]) => <Link key={to} to={to} onClick={() => setOpen(false)} className="block rounded-xl px-4 py-3 font-semibold hover:bg-white/5">{label}</Link>)}<div className="mt-2 grid grid-cols-2 gap-2"><Link to="/login" className="rounded-xl border p-3 text-center font-bold">Entrar</Link><Link to="/register" className="rounded-xl bg-gloopy-accent p-3 text-center font-bold text-gloopy-bg-dark">Criar conta</Link></div></div> : null}</header>
+    <Outlet />
+    <footer className="border-t border-white/10 px-5 py-10"><div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-[1fr_auto]"><div><Link to="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold"><img src="/mascot/gloopy-icon.png" alt="" className="h-11 w-11 rounded-xl" />Gloopy</Link><p className="mt-3 max-w-sm text-sm text-gloopy-muted">Conversa, conexão e mini-games no mesmo ritmo.</p></div><div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-gloopy-muted">{links.map(([to, label]) => <Link key={to} to={to} className="hover:text-white">{label}</Link>)}</div></div><div className="mx-auto mt-9 flex max-w-7xl flex-col gap-2 border-t border-white/10 pt-5 text-xs text-gloopy-muted sm:flex-row sm:justify-between"><span>© 2026 Gloopy.</span><span>Feito para conversas que viram história.</span></div></footer>
+  </div>;
+}

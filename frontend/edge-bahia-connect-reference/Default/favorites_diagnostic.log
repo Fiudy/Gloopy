@@ -1,0 +1,19 @@
+2026-09-01 19:03:11.279: [INFO] CurrentProfilePath: C:\Users\Guilherme.carvalho\Documents\Gloopy\frontend\edge-bahia-connect-reference\Default
+2026-09-01 19:03:11.279: [INFO] Profiles total count: 1
+2026-09-01 19:03:11.279: [INFO] Profile: name=Perfil 1 path=C:\Users\Guilherme.carvalho\Documents\Gloopy\frontend\edge-bahia-connect-reference\Default lastActive=2026-09-01T19:03:11.268Z
+2026-09-01 19:03:11.279: [INFO] LastUsedProfileDir: C:\Users\Guilherme.carvalho\Documents\Gloopy\frontend\edge-bahia-connect-reference\Default
+2026-09-01 19:03:11.279: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\Users\Guilherme.carvalho\Documents\Gloopy\frontend\edge-bahia-connect-reference\Default lastActive=2026-09-01T19:03:11.268Z
+2026-09-01 19:03:11.279: [INFO] OnDoneLoading sync enabled: 0
+2026-09-01 19:03:11.279: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-01 19:03:11.279: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-01 19:03:11.279: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-01 19:03:11.319: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-09-01 19:03:11.375: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-09-01 19:03:11.378: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-09-01 19:03:11.385: [INFO] Primary account changed.
+2026-09-01 19:03:11.385: [INFO] OnPrimaryAccountChanged PrimaryAccountChangeEvent::Type::kSet
+2026-09-01 19:03:11.389: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-09-01 19:03:11.429: [INFO] VisibilityChanged: 0
+2026-09-01 19:03:11.469: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-09-01 19:03:13.204: [INFO] Sync initialization duration: 1628ms
+2026-09-01 19:03:17.516: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1

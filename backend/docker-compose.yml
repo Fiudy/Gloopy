@@ -1,0 +1,121 @@
+# Todas as portas expostas ao HOST usam valores não-padrão de propósito,
+# para não colidir com outros serviços que já rodam no seu servidor.
+# Internamente (rede docker "gloopy-net"), os serviços conversam pelas portas padrão.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gloopy-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gloopy
+      POSTGRES_PASSWORD: gloopy
+      POSTGRES_DB: gloopy
+    ports:
+      - "5544:5432" # host:5544 -> container:5432
+    volumes:
+      - gloopy-postgres-data:/var/lib/postgresql/data
+    networks:
+      - gloopy-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gloopy -d gloopy"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: gloopy-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6380:6379" # host:6380 -> container:6379
+    volumes:
+      - gloopy-redis-data:/data
+    networks:
+      - gloopy-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: gloopy-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: gloopy
+      RABBITMQ_DEFAULT_PASS: gloopy
+    ports:
+      - "5673:5672"   # AMQP - host:5673 -> container:5672
+      - "15673:15672" # painel web de gestão - host:15673 -> container:15672
+    volumes:
+      - gloopy-rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - gloopy-net
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: gloopy-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: gloopy
+      MINIO_ROOT_PASSWORD: gloopy12345
+    ports:
+      - "9500:9000" # API S3 - host:9500 -> container:9000
+      - "9501:9001" # console web - host:9501 -> container:9001
+    volumes:
+      - gloopy-minio-data:/data
+    networks:
+      - gloopy-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gloopy-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql://gloopy:gloopy@postgres:5432/gloopy?schema=public"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_URL: "amqp://gloopy:gloopy@rabbitmq:5672"
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+    ports:
+      - "3333:3333" # API/WebSocket - host:3333 -> container:3333
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - gloopy-net
+
+networks:
+  gloopy-net:
+    driver: bridge
+
+volumes:
+  gloopy-postgres-data:
+  gloopy-redis-data:
+  gloopy-rabbitmq-data:
+  gloopy-minio-data:
