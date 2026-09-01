@@ -31,7 +31,7 @@ let PrismaMessageRepository = class PrismaMessageRepository {
                 ...(options.before ? { createdAt: { lt: options.before } } : {}),
             },
             include: { deletions: true },
-            orderBy: { createdAt: 'desc' },
+            orderBy: { createdAt: 'asc' },
             take: options.limit,
         });
         return records.map((r) => this.toDomain(r));

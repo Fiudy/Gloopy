@@ -90,6 +90,7 @@ services:
     env_file:
       - .env
     environment:
+      NODE_ENV: development
       DATABASE_URL: "postgresql://gloopy:gloopy@postgres:5432/gloopy?schema=public"
       REDIS_HOST: redis
       REDIS_PORT: 6379

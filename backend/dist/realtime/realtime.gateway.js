@@ -193,7 +193,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RealtimeGateway.prototype, "onTypingStop", null);
 exports.RealtimeGateway = RealtimeGateway = RealtimeGateway_1 = __decorate([
-    (0, websockets_1.WebSocketGateway)({ cors: { origin: process.env.CORS_ORIGIN ?? '*' } }),
+    (0, websockets_1.WebSocketGateway)({ cors: { origin: process.env.NODE_ENV === 'production' ? process.env.CORS_ORIGIN ?? false : true } }),
     __metadata("design:paramtypes", [jwt_1.JwtService,
         presence_service_1.PresenceService,
         conversation_repository_1.ConversationRepository,

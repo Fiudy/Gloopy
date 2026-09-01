@@ -34,9 +34,10 @@ export function ChatPage() {
     const socket = getSocket();
     if (!socket) return;
     const onTyping = (event: { conversationId: string; userId: string; isTyping: boolean }) => { if (event.conversationId === id && event.userId !== user?.id) setTyping(event.isTyping); };
+    const onGameUpdated = (event: { sessionId: string }) => { client.invalidateQueries({ queryKey: ['game', event.sessionId] }); refresh(); };
     socket.connect(); socket.emit('conversation:join', { conversationId: id });
-    socket.on('message:created', refresh); socket.on('message:updated', refresh); socket.on('message:deleted', refresh); socket.on('game:updated', refresh); socket.on('typing:update', onTyping);
-    return () => { socket.emit('conversation:leave', { conversationId: id }); socket.off('message:created', refresh); socket.off('message:updated', refresh); socket.off('message:deleted', refresh); socket.off('game:updated', refresh); socket.off('typing:update', onTyping); };
+    socket.on('message:created', refresh); socket.on('message:updated', refresh); socket.on('message:deleted', refresh); socket.on('game:updated', onGameUpdated); socket.on('typing:update', onTyping);
+    return () => { socket.emit('conversation:leave', { conversationId: id }); socket.off('message:created', refresh); socket.off('message:updated', refresh); socket.off('message:deleted', refresh); socket.off('game:updated', onGameUpdated); socket.off('typing:update', onTyping); };
   }, [id, refresh, user?.id]);
   useEffect(() => { const last = query.data?.at(-1); if (last && last.senderId !== user?.id) conversationsApi.read(last.id).catch(() => undefined); }, [query.data, user?.id]);
 
