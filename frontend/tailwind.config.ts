@@ -21,12 +21,13 @@ export default {
         }
       },
       borderRadius: { lg: 'var(--radius)', md: 'calc(var(--radius) - 2px)', sm: 'calc(var(--radius) - 4px)' },
-      fontFamily: { display: ['Fredoka', 'sans-serif'], body: ['Inter', 'sans-serif'] },
+      fontFamily: { display: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'], body: ['Inter', 'sans-serif'] },
       boxShadow: { glow: '0 0 50px rgba(124,77,255,.28)', card: '0 20px 60px rgba(0,0,0,.28)' },
-      animation: { float: 'float 5s ease-in-out infinite', 'fade-up': 'fade-up .5s cubic-bezier(.2,.8,.2,1) both' },
+      animation: { float: 'float 5s ease-in-out infinite', 'fade-up': 'fade-up .5s cubic-bezier(.2,.8,.2,1) both', marquee: 'marquee 28s linear infinite' },
       keyframes: {
         float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-        'fade-up': { from: { opacity: '0', transform: 'translateY(14px)' }, to: { opacity: '1', transform: 'translateY(0)' } }
+        'fade-up': { from: { opacity: '0', transform: 'translateY(14px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        marquee: { to: { transform: 'translateX(-33.333%)' } }
       }
     }
   },

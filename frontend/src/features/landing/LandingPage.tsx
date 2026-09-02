@@ -1,207 +1,342 @@
+import { useLayoutEffect, useRef } from "react";
 import {
   ArrowRight,
+  CheckCheck,
   Gamepad2,
   Image,
+  LockKeyhole,
   MessageCircle,
   ShieldCheck,
-  Sparkles,
   Users,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 const features = [
   {
     icon: MessageCircle,
-    title: "Papo que flui",
-    text: "Mensagens, presença e confirmação de leitura em tempo real.",
-  },
-  {
-    icon: Users,
-    title: "Sua galera junta",
-    text: "Conversas 1:1 e grupos com controles claros para admins.",
+    title: "Conversas naturais",
+    text: "Mensagens diretas e grupos com presença, digitação e confirmações em tempo real.",
   },
   {
     icon: Image,
-    title: "Manda do seu jeito",
-    text: "Fotos, vídeos, áudios e documentos sem quebrar o ritmo.",
+    title: "Mídia no contexto",
+    text: "Compartilhe imagens, vídeos, áudios e documentos sem interromper a conversa.",
+  },
+  {
+    icon: Gamepad2,
+    title: "Interação compartilhada",
+    text: "Convites e partidas acontecem no mesmo espaço, sincronizados para todos.",
   },
 ];
+const questions = [
+  [
+    "O Gloopy é apenas um app de jogos?",
+    "Não. É uma plataforma de conversas privadas. Os mini-games ampliam a interação sem substituir o chat.",
+  ],
+  [
+    "Posso criar e administrar grupos?",
+    "Sim. Grupos possuem múltiplos administradores, participantes e controles claros de permissão.",
+  ],
+  [
+    "Como funciona a privacidade?",
+    "Você controla último acesso e confirmações de leitura. Toda conversa exige autenticação e participação válida.",
+  ],
+];
+
 export function LandingPage() {
-  const root = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => { gsap.registerPlugin(ScrollTrigger); const context = gsap.context(() => { gsap.from('[data-hero-copy] > *', { y: 48, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out' }); gsap.from('[data-hero-mascot]', { y: 100, scale: .86, opacity: 0, duration: 1.2, ease: 'power4.out' }); gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 82%' }, y: 54, opacity: 0, duration: .85, ease: 'power3.out' })); }, root); return () => context.revert(); }, []);
+  const root = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      gsap.from("[data-hero-copy] > *", {
+        y: 42,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
+      gsap.from("[data-hero-art]", {
+        x: 90,
+        scale: 0.92,
+        opacity: 0,
+        duration: 1.15,
+        ease: "power4.out",
+      });
+      gsap.utils
+        .toArray<HTMLElement>("[data-reveal]")
+        .forEach((element) =>
+          gsap.from(element, {
+            scrollTrigger: { trigger: element, start: "top 84%" },
+            y: 48,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          }),
+        );
+    }, root);
+    return () => context.revert();
+  }, []);
   return (
-    <div ref={root} className="overflow-hidden">
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
-        <nav
-          aria-label="Principal"
-          className="mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-gloopy-bg-dark/85 px-3 py-3 shadow-card backdrop-blur-xl sm:px-4"
-        >
-          <Link
-            to="/"
-            className="flex items-center gap-2 font-display text-xl font-bold"
-          >
-            <img
-              src="/mascot/gloopy-cool-icon.png"
-              alt=""
-              className="h-9 w-9 rounded-xl"
-            />
-            <span className="hidden min-[360px]:inline">Gloopy</span>
-          </Link>
-          <div className="hidden items-center gap-7 text-sm font-semibold text-gloopy-muted md:flex">
-            <a href="#diferencial">Por que Gloopy?</a>
-            <a href="#recursos">Recursos</a>
-          </div>
-          <div className="flex items-center gap-1 sm:gap-2">
-            <Link
-              to="/login"
-              className="rounded-xl px-2 py-2 text-sm font-semibold hover:bg-white/10 sm:px-3"
-            >
-              Entrar
-            </Link>
-            <Link
-              to="/register"
-              className="rounded-xl bg-gloopy-accent px-3 py-2 text-sm font-bold text-gloopy-bg-dark sm:px-4"
-            >
-              <span className="sm:hidden">Criar</span>
-              <span className="hidden sm:inline">Criar conta</span>
-            </Link>
-          </div>
-        </nav>
-      </header>
-      <main>
-        <section className="relative mx-auto grid min-h-screen min-w-0 max-w-7xl items-center gap-10 px-5 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_.95fr]">
+    <main ref={root}>
+      <section className="relative min-h-[880px] overflow-hidden px-5 pb-12 pt-32 sm:px-8 lg:min-h-screen lg:pt-28">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_35%,rgba(124,77,255,.30),transparent_36%),radial-gradient(circle_at_18%_70%,rgba(255,138,61,.11),transparent_30%)]" />
+        <div className="absolute inset-0 opacity-[.05] [background-image:linear-gradient(rgba(255,255,255,.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.6)_1px,transparent_1px)] [background-size:72px_72px]" />
+        <div className="relative mx-auto grid min-h-[740px] max-w-7xl items-center gap-8 lg:grid-cols-[1.05fr_.95fr]">
           <div data-hero-copy className="z-10 min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full border border-gloopy-accent/40 bg-gloopy-accent/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-gloopy-accent">
-              <Sparkles className="h-4 w-4" /> Chat virou playground
-            </span>
-            <h1 className="mt-7 max-w-3xl font-display text-[2.65rem] font-bold leading-[.98] sm:text-7xl sm:leading-[.95] lg:text-[5.5rem]">
-              Seu grupo. Seu papo. <span className="text-gloopy-accent">Seu próximo vício.</span>
+            <p className="eyebrow">Conversar. Jogar. Permanecer.</p>
+            <h1 className="mt-7 max-w-3xl font-display text-[4rem] font-bold uppercase leading-[.82] tracking-[-.035em] sm:text-8xl lg:text-[7.4rem]">
+              Toda conversa pode{" "}
+              <span className="text-gloopy-accent">ganhar vida.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-gloopy-muted">
-              O chat que transforma qualquer “e aí?” em conversa, conexão e disputa — sem trocar de app.
+            <p className="mt-8 max-w-xl text-lg leading-8 text-gloopy-muted sm:text-xl">
+              O Gloopy reúne conversas, grupos, mídia e jogos no mesmo lugar —
+              para que estar longe nunca pareça estar distante.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/register"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gloopy-accent px-6 font-bold text-gloopy-bg-dark transition hover:-translate-y-1"
+                className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-gloopy-accent px-7 font-bold text-gloopy-bg-dark shadow-[0_18px_50px_rgba(255,138,61,.22)] transition hover:-translate-y-1"
               >
-                Entrar na roda <ArrowRight className="h-5 w-5" />
+                Criar minha conta{" "}
+                <ArrowRight className="transition group-hover:translate-x-1" />
               </Link>
-              <a
-                href="#diferencial"
-                className="inline-flex min-h-12 items-center justify-center rounded-xl border bg-gloopy-surface px-6 font-bold"
+              <Link
+                to="/recursos"
+                className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-7 font-bold backdrop-blur hover:bg-white/10"
               >
-                Ver como funciona
-              </a>
+                Conhecer a plataforma
+              </Link>
             </div>
-            <div className="mt-8 flex items-center gap-3 text-sm text-gloopy-muted">
-              <ShieldCheck className="h-5 w-5 text-gloopy-status-online" /> Seu
-              papo, suas escolhas de privacidade.
+            <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm text-gloopy-muted">
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-gloopy-status-online" />
+                Privacidade configurável
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCheck className="h-4 w-4 text-gloopy-primary" />
+                Tempo real
+              </span>
+              <span className="flex items-center gap-2">
+                <LockKeyhole className="h-4 w-4 text-gloopy-accent" />
+                Acesso autenticado
+              </span>
             </div>
           </div>
-          <div data-hero-mascot className="relative flex h-[460px] items-start justify-center overflow-hidden lg:h-[680px]">
-            <div className="absolute h-[65%] w-[75%] rounded-full bg-gloopy-primary/30 blur-[90px]" />
+          <div
+            data-hero-art
+            className="relative h-[460px] self-end overflow-hidden sm:h-[580px] lg:h-[760px]"
+          >
+            <div className="absolute inset-x-[8%] bottom-[8%] h-[55%] rounded-full bg-gloopy-primary/35 blur-[90px]" />
             <img
               src="/mascot/gloopy-waving.png"
-              alt="Mascote Gloopy acenando"
-              className="relative z-10 w-[135%] max-w-none object-contain object-top sm:w-[105%] lg:w-[125%]"
+              alt="Mascote oficial do Gloopy dando boas-vindas"
+              className="absolute left-1/2 top-2 h-auto w-[92%] max-w-[680px] -translate-x-1/2 sm:top-0 sm:w-[86%] lg:top-[2%] lg:w-[94%]"
             />
           </div>
-        </section>
-        <section
-          id="diferencial"
-          className="border-y bg-gloopy-primary-deep px-6 py-20"
-        >
-          <div data-reveal className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
-            <img
-              src="/mascot/gloopy-texting.png"
-              alt="Mascote Gloopy conversando pelo celular"
-              className="mx-auto max-h-[430px]"
-            />
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[.22em] text-gloopy-accent">
-                Sem sair do papo
-              </p>
-              <h2 className="mt-4 font-display text-4xl font-bold sm:text-5xl">
-                Do “e aí?” ao “valendo!” em um toque.
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-white/75">
-                O convite aparece como parte da conversa. Aceitou? O tabuleiro
-                abre na hora e acompanha cada jogada ao vivo.
-              </p>
-              <div className="mt-7 inline-flex items-center gap-3 rounded-2xl bg-gloopy-bg-dark/35 p-4">
-                <Gamepad2 className="h-8 w-8 text-gloopy-accent" />
-                <div>
-                  <strong className="block">Jogo da velha, primeiro.</strong>
-                  <span className="text-sm text-white/70">
-                    Mais atividades entram na roda depois.
-                  </span>
-                </div>
-              </div>
-            </div>
+        </div>
+      </section>
+      <div className="overflow-hidden border-y border-black/10 bg-gloopy-accent py-4 text-gloopy-bg-dark">
+        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-display text-lg font-bold uppercase tracking-[.12em]">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <span key={index}>
+              Conversas privadas • Grupos organizados • Mídia integrada •
+              Mini-games em tempo real • Privacidade sob controle •
+            </span>
+          ))}
+        </div>
+      </div>
+      <section data-reveal className="px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="eyebrow">Uma plataforma completa</p>
+          <div className="mt-4 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+            <h2 className="display-title">
+              Tudo o que a conversa precisa. Nada que tire você dela.
+            </h2>
+            <p className="max-w-2xl text-lg leading-8 text-gloopy-muted lg:pt-3">
+              Tecnologia deve ampliar a proximidade. Cada recurso mantém
+              contexto, continuidade e controle nas mãos do usuário.
+            </p>
           </div>
-        </section>
-        <section data-reveal id="recursos" className="mx-auto max-w-6xl px-6 py-24">
-          <p className="text-sm font-bold uppercase tracking-[.22em] text-gloopy-accent">
-            Feito para estar perto
-          </p>
-          <h2 className="mt-4 max-w-2xl font-display text-4xl font-bold sm:text-5xl">
-            Tudo o que você espera de um chat. Com mais personalidade.
-          </h2>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {features.map(({ icon: Icon, title, text }, i) => (
-              <article
-                key={title}
-                className="rounded-3xl border bg-gloopy-surface p-6 transition hover:-translate-y-1 hover:border-gloopy-primary"
-              >
-                <Icon className="h-10 w-10 rounded-xl bg-gloopy-primary/15 p-2 text-gloopy-primary" />
-                <span className="mt-8 block text-xs font-bold text-gloopy-accent">
-                  0{i + 1}
+          <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
+            {features.map(({ icon: Icon, title, text }, index) => (
+              <article key={title} className={`premium-card group min-h-72 ${index === 0 ? 'lg:col-span-5 lg:bg-gloopy-primary-deep' : index === 1 ? 'lg:col-span-3' : 'lg:col-span-4 lg:bg-gloopy-accent lg:text-gloopy-bg-dark'}`}>
+                <span className="text-xs font-bold text-gloopy-muted">
+                  0{index + 1}
                 </span>
-                <h3 className="mt-2 font-display text-2xl font-semibold">
+                <Icon className={`mt-10 h-11 w-11 ${index === 2 ? 'text-gloopy-bg-dark' : 'text-gloopy-accent'}`} />
+                <h3 className="mt-6 font-display text-2xl font-bold">
                   {title}
                 </h3>
-                <p className="mt-3 leading-relaxed text-gloopy-muted">{text}</p>
+                <p className={`mt-3 leading-7 ${index === 2 ? 'text-gloopy-bg-dark/70' : 'text-gloopy-muted'}`}>{text}</p>
               </article>
             ))}
           </div>
-        </section>
-        <section className="mx-auto max-w-6xl px-6 pb-24">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gloopy-accent px-7 py-12 text-gloopy-bg-dark sm:px-12 lg:grid lg:grid-cols-[1fr_340px]">
-            <div>
-              <h2 className="font-display text-4xl font-bold sm:text-5xl">
-                Seu próximo papo pode começar agora.
-              </h2>
-              <p className="mt-4 text-lg opacity-70">
-                Crie sua conta, encontre sua galera e deixe o Gloopy puxar
-                assunto.
-              </p>
-              <Link
-                to="/register"
-                className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-xl bg-gloopy-bg-dark px-6 font-bold text-white"
-              >
-                Criar minha conta <ArrowRight />
-              </Link>
-            </div>
+        </div>
+      </section>
+      <section data-reveal className="px-5 py-16 sm:px-8">
+        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2.5rem] bg-gloopy-bg-light text-gloopy-bg-dark lg:grid-cols-2">
+          <div className="relative min-h-[520px] overflow-hidden bg-gloopy-primary-deep">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,138,61,.25),transparent_55%)]" />
             <img
-              src="/mascot/gloopy-thumbsup.png"
-              alt="Mascote Gloopy fazendo sinal de positivo"
-              className="mx-auto mt-8 max-h-72 lg:absolute lg:bottom-0 lg:right-10"
+              src="/mascot/gloopy-texting.png"
+              alt="Mascote Gloopy usando o chat"
+              className="absolute bottom-[-12%] left-1/2 h-[620px] max-w-none -translate-x-1/2"
             />
           </div>
-        </section>
-      </main>
-      <footer className="border-t px-6 py-8">
-        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-sm text-gloopy-muted sm:flex-row">
-          <span>© 2026 Gloopy. Papo bom mora aqui.</span>
-          <div className="flex gap-5">
-            <a href="#recursos">Recursos</a>
-            <Link to="/login">Entrar</Link>
+          <div className="flex flex-col justify-center p-8 sm:p-14">
+            <span className="eyebrow text-gloopy-primary-deep">
+              Projetado para fluidez
+            </span>
+            <h2 className="mt-4 font-display text-4xl font-bold sm:text-5xl">
+              Da primeira mensagem à experiência compartilhada.
+            </h2>
+            <div className="mt-9 space-y-7">
+              {[
+                ["01", "Encontre pessoas e inicie conversas privadas."],
+                ["02", "Compartilhe conteúdo sem perder o contexto."],
+                ["03", "Transforme o momento em interação ao vivo."],
+              ].map(([number, text]) => (
+                <div
+                  key={number}
+                  className="flex gap-5 border-t border-black/10 pt-5"
+                >
+                  <strong className="text-gloopy-primary-deep">{number}</strong>
+                  <p className="font-semibold">{text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </section>
+      <section data-reveal className="px-5 py-24 sm:px-8">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[.9fr_1.1fr]">
+          <div>
+            <p className="eyebrow text-gloopy-status-online">
+              Privacidade por escolha
+            </p>
+            <h2 className="display-title mt-4">
+              Confiança não é detalhe. É infraestrutura.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gloopy-muted">
+              Acesso autenticado, participação validada e preferências claras
+              para último acesso e confirmações de leitura.
+            </p>
+            <Link
+              to="/seguranca"
+              className="mt-7 inline-flex items-center gap-2 font-bold text-gloopy-accent"
+            >
+              Conheça nossos princípios <ArrowRight />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="premium-card sm:row-span-2">
+              <LockKeyhole className="h-10 w-10 text-gloopy-primary" />
+              <h3 className="mt-16 font-display text-3xl font-bold">
+                Seu espaço permanece seu.
+              </h3>
+              <p className="mt-3 text-gloopy-muted">
+                Controles acessíveis e regras de acesso aplicadas no servidor.
+              </p>
+            </div>
+            <div className="rounded-[2rem] bg-gloopy-primary p-7">
+              <Users className="h-9 w-9" />
+              <strong className="mt-10 block text-xl">
+                Grupos administráveis
+              </strong>
+            </div>
+            <div className="rounded-[2rem] bg-gloopy-accent p-7 text-gloopy-bg-dark">
+              <ShieldCheck className="h-9 w-9" />
+              <strong className="mt-10 block text-xl">
+                Preferências transparentes
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        data-reveal
+        className="overflow-hidden bg-gloopy-primary-deep px-5 py-20 sm:px-8"
+      >
+        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow">Interação nativa</p>
+            <h2 className="mt-4 font-display text-5xl font-bold sm:text-7xl">
+              Quando conversar não basta, jogue.
+            </h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
+              Convide, aceite e acompanhe cada movimento sem abandonar o fluxo
+              da conversa.
+            </p>
+            <Link
+              to="/games/tic-tac-toe"
+              className="mt-8 inline-flex min-h-14 items-center gap-3 rounded-2xl bg-gloopy-accent px-7 font-bold text-gloopy-bg-dark"
+            >
+              Explorar mini-games <ArrowRight />
+            </Link>
+          </div>
+          <div className="relative h-[520px] overflow-hidden">
+            <div className="absolute inset-x-0 bottom-0 h-3/4 rounded-full bg-gloopy-accent/20 blur-[80px]" />
+            <img
+              src="/mascot/gloopy-cool.png"
+              alt="Mascote Gloopy com atitude"
+              className="absolute left-1/2 top-0 h-[640px] max-w-none -translate-x-1/2"
+            />
+          </div>
+        </div>
+      </section>
+      <section data-reveal className="px-5 py-24 sm:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="eyebrow">Perguntas frequentes</p>
+          <h2 className="display-title mt-4">Clareza antes de começar.</h2>
+        </div>
+        <div className="mx-auto mt-12 max-w-4xl divide-y divide-white/10 border-y border-white/10">
+          {questions.map(([question, answer]) => (
+            <details key={question} className="group py-6">
+              <summary className="flex cursor-pointer list-none justify-between gap-6 font-display text-xl font-bold">
+                {question}
+                <span className="text-gloopy-accent transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="max-w-2xl pt-4 leading-7 text-gloopy-muted">
+                {answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section className="px-5 pb-24 sm:px-8">
+        <div
+          data-reveal
+          className="relative mx-auto grid max-w-7xl overflow-hidden rounded-[2.5rem] bg-gloopy-accent p-8 text-gloopy-bg-dark sm:p-14 lg:grid-cols-[1fr_360px]"
+        >
+          <div className="relative z-10">
+            <p className="text-sm font-bold uppercase tracking-[.18em]">
+              Comece com uma conversa
+            </p>
+            <h2 className="mt-4 max-w-3xl font-display text-4xl font-bold sm:text-6xl">
+              Uma experiência mais humana começa aqui.
+            </h2>
+            <p className="mt-5 max-w-xl text-lg opacity-75">
+              Crie sua conta e descubra uma forma mais completa de permanecer
+              conectado.
+            </p>
+            <Link
+              to="/register"
+              className="mt-8 inline-flex min-h-14 items-center gap-3 rounded-2xl bg-gloopy-bg-dark px-7 font-bold text-white"
+            >
+              Criar conta gratuita <ArrowRight />
+            </Link>
+          </div>
+          <img
+            src="/mascot/gloopy-thumbsup.png"
+            alt="Mascote Gloopy aprovando"
+            className="mx-auto mt-8 max-h-80 lg:absolute lg:-bottom-20 lg:right-6 lg:mt-0 lg:max-h-[460px]"
+          />
+        </div>
+      </section>
+    </main>
   );
 }
